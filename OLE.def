@@ -1,0 +1,12 @@
+EXPORTS
+  SetSVFromVariant
+  _SetSVFromVariant = SetSVFromVariant
+  SetSVFromVariantEx
+  _SetSVFromVariantEx = SetSVFromVariantEx
+  SetVariantFromSV
+  _SetVariantFromSV = SetVariantFromSV
+  CreatePerlObject
+  _CreatePerlObject = CreatePerlObject
+  boot_Win32__OLE
+  _boot_Win32__OLE = boot_Win32__OLE
+  
