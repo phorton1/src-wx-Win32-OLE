@@ -3275,7 +3275,6 @@ Initialize(pTHX_ HV *stash, DWORD dwCoInit=COINIT_MULTITHREADED)
 void
 Uninitialize(pTHX_ PERINTERP *pInterp)
 {
-	printf("Unitialize\r\n");
     DBG(("Uninitialize\n"));
     EnterCriticalSection(&g_CriticalSection);
     if (g_bInitialized) {
@@ -3338,11 +3337,13 @@ Uninitialize(pTHX_ PERINTERP *pInterp)
 
 }   /* Uninitialize */
 
+
 static void
 AtExit(pTHX_ void *pVoid)
 {
-	// don't exit from child threads
-	printf("AtExit(%d)\r\n",prh_thread_num);
+	/* don't exit from child threads */
+	/* printf("AtExit(%d)\r\n",prh_thread_num); */
+	
 	if (prh_thread_num > 0)
 	{
 		return;
@@ -3365,8 +3366,6 @@ AtExit(pTHX_ void *pVoid)
 void
 Bootstrap(pTHX)
 {
-	printf("Bootstrap\r\n");
-	
     dSP;
 #ifdef PERL_IMPLICIT_CONTEXT
     PERINTERP *pInterp;
@@ -3456,7 +3455,7 @@ CallObjectMethod(pTHX_ SV **mark, I32 ax, I32 items, char *pszMethod)
 
 /*##########################################################################*/
 
-#line 3460 "OLE.c"
+#line 3459 "OLE.c"
 #ifndef PERL_UNUSED_VAR
 #  define PERL_UNUSED_VAR(var) if (0) var = var
 #endif
@@ -3508,7 +3507,7 @@ S_croak_xs_usage(pTHX_ const CV *const cv, const char *const params)
 #define newXSproto_portable(name, c_impl, file, proto) (PL_Sv=(SV*)newXS(name, c_impl, file), sv_setpv(PL_Sv, proto), (CV*)PL_Sv)
 #endif /* !defined(newXS_flags) */
 
-#line 3512 "OLE.c"
+#line 3511 "OLE.c"
 
 XS(XS_Win32__OLE_Initialize); /* prototype to pass -Wmissing-prototypes */
 XS(XS_Win32__OLE_Initialize)
@@ -3523,7 +3522,7 @@ XS(XS_Win32__OLE_Initialize)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 3467 "OLE.xs"
+#line 3466 "OLE.xs"
 {
     char *paszMethod[] = {"Initialize", "Uninitialize", "SpinMessageLoop",
                           "MessageLoop", "QuitMessageLoop",
@@ -3588,7 +3587,7 @@ XS(XS_Win32__OLE_Initialize)
 
     XSRETURN_EMPTY;
 }
-#line 3592 "OLE.c"
+#line 3591 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -3609,13 +3608,13 @@ XS(XS_Win32__OLE_prhSetThreadNum)
     SP -= items;
     {
 	IV	thread_num = (IV)SvIV(ST(0));
-#line 3539 "OLE.xs"
+#line 3538 "OLE.xs"
 {
-	printf("prhSetThreadNum(%d)\r\n",(int) thread_num);
+	/* prh printf("prhSetThreadNum(%d)\r\n",(int) thread_num); */
 	prh_thread_num = (int) thread_num;
 	XSRETURN_EMPTY;
 }
-#line 3619 "OLE.c"
+#line 3618 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -3634,7 +3633,7 @@ XS(XS_Win32__OLE_new)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 3551 "OLE.xs"
+#line 3550 "OLE.xs"
 {
     CLSID clsid;
     IDispatch *pDispatch = NULL;
@@ -3760,7 +3759,7 @@ XS(XS_Win32__OLE_new)
     }
     XSRETURN(1);
 }
-#line 3764 "OLE.c"
+#line 3763 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -3781,7 +3780,7 @@ XS(XS_Win32__OLE_DESTROY)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 3681 "OLE.xs"
+#line 3680 "OLE.xs"
 {
     WINOLEOBJECT *pObj = GetOleObject(aTHX_ self, TRUE);
     DBG(("Win32::OLE::DESTROY |%lx| |%lx|\n", pObj,
@@ -3792,7 +3791,7 @@ XS(XS_Win32__OLE_DESTROY)
     }
     XSRETURN_EMPTY;
 }
-#line 3796 "OLE.c"
+#line 3795 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -3815,7 +3814,7 @@ XS(XS_Win32__OLE_Dispatch)
 	SV *	self = ST(0);
 	SV *	method = ST(1);
 	SV *	retval = ST(2);
-#line 3698 "OLE.xs"
+#line 3697 "OLE.xs"
 {
     char *buffer = "";
     size_t length;
@@ -4094,7 +4093,7 @@ XS(XS_Win32__OLE_Dispatch)
 
     XSRETURN(1);
 }
-#line 4098 "OLE.c"
+#line 4097 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4116,7 +4115,7 @@ XS(XS_Win32__OLE_GetIDsOfNames)
     {
 	SV *	self = ST(0);
 	SV *	method = ST(1);
-#line 3982 "OLE.xs"
+#line 3981 "OLE.xs"
 {
     DISPID dispID;
 
@@ -4136,7 +4135,7 @@ XS(XS_Win32__OLE_GetIDsOfNames)
 
     XSRETURN_IV(dispID);
 }
-#line 4140 "OLE.c"
+#line 4139 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4155,7 +4154,7 @@ XS(XS_Win32__OLE_EnumAllObjects)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 4005 "OLE.xs"
+#line 4004 "OLE.xs"
 {
     if (CallObjectMethod(aTHX_ mark, ax, items, "EnumAllObjects"))
 	return;
@@ -4200,7 +4199,7 @@ XS(XS_Win32__OLE_EnumAllObjects)
     }
     XSRETURN_IV(count);
 }
-#line 4204 "OLE.c"
+#line 4203 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4219,7 +4218,7 @@ XS(XS_Win32__OLE_Forward)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 4053 "OLE.xs"
+#line 4052 "OLE.xs"
 {
     if (CallObjectMethod(aTHX_ mark, ax, items, "Forward"))
 	return;
@@ -4242,7 +4241,7 @@ XS(XS_Win32__OLE_Forward)
     ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, NULL);
     XSRETURN(1);
 }
-#line 4246 "OLE.c"
+#line 4245 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4261,7 +4260,7 @@ XS(XS_Win32__OLE_GetActiveObject)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 4079 "OLE.xs"
+#line 4078 "OLE.xs"
 {
     CLSID clsid;
     OLECHAR Buffer[OLE_BUF_SIZ];
@@ -4314,7 +4313,7 @@ XS(XS_Win32__OLE_GetActiveObject)
     DBG(("Win32::OLE::GetActiveObject |%lx| |%lx|\n", ST(0), pDispatch));
     XSRETURN(1);
 }
-#line 4318 "OLE.c"
+#line 4317 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4333,7 +4332,7 @@ XS(XS_Win32__OLE_GetObject)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 4135 "OLE.xs"
+#line 4134 "OLE.xs"
 {
     IBindCtx *pBindCtx;
     IMoniker *pMoniker;
@@ -4388,7 +4387,7 @@ XS(XS_Win32__OLE_GetObject)
     ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
     XSRETURN(1);
 }
-#line 4392 "OLE.c"
+#line 4391 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4409,7 +4408,7 @@ XS(XS_Win32__OLE_GetTypeInfo)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 4194 "OLE.xs"
+#line 4193 "OLE.xs"
 {
     WINOLEOBJECT *pObj = GetOleObject(aTHX_ self);
     if (!pObj)
@@ -4436,7 +4435,7 @@ XS(XS_Win32__OLE_GetTypeInfo)
     ST(0) = sv_2mortal(CreateTypeInfoObject(aTHX_ pTypeInfo, pTypeAttr));
     XSRETURN(1);
 }
-#line 4440 "OLE.c"
+#line 4439 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4458,7 +4457,7 @@ XS(XS_Win32__OLE_QueryInterface)
     {
 	SV *	self = ST(0);
 	SV *	itf = ST(1);
-#line 4226 "OLE.xs"
+#line 4225 "OLE.xs"
 {
     WINOLEOBJECT *pObj = GetOleObject(aTHX_ self);
     if (!pObj)
@@ -4497,7 +4496,7 @@ XS(XS_Win32__OLE_QueryInterface)
     DBG(("Win32::OLE::QueryInterface |%lx| |%lx|\n", ST(0), pDispatch));
     XSRETURN(1);
 }
-#line 4501 "OLE.c"
+#line 4500 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4516,7 +4515,7 @@ XS(XS_Win32__OLE_QueryObjectType)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 4268 "OLE.xs"
+#line 4267 "OLE.xs"
 {
     if (CallObjectMethod(aTHX_ mark, ax, items, "QueryObjectType"))
 	return;
@@ -4584,7 +4583,7 @@ XS(XS_Win32__OLE_QueryObjectType)
     PUSHs(sv_2mortal(sv_setbstr(aTHX_ NULL, bstr, cp)));
     SysFreeString(bstr);
 }
-#line 4588 "OLE.c"
+#line 4587 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4603,7 +4602,7 @@ XS(XS_Win32__OLE_WithEvents)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 4339 "OLE.xs"
+#line 4338 "OLE.xs"
 {
     if (CallObjectMethod(aTHX_ mark, ax, items, "WithEvents"))
 	return;
@@ -4768,7 +4767,7 @@ XS(XS_Win32__OLE_WithEvents)
 
     XSRETURN_EMPTY;
 }
-#line 4772 "OLE.c"
+#line 4771 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4789,7 +4788,7 @@ XS(XS_Win32__OLE__Tie_DESTROY)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 4514 "OLE.xs"
+#line 4513 "OLE.xs"
 {
     WINOLEOBJECT *pObj = GetOleObject(aTHX_ self, TRUE);
     DBG(("Win32::OLE::Tie::DESTROY |%lx| |%lx|\n", pObj,
@@ -4814,7 +4813,7 @@ XS(XS_Win32__OLE__Tie_DESTROY)
     DBG(("End of Win32::OLE::Tie::DESTROY\n"));
     XSRETURN_EMPTY;
 }
-#line 4818 "OLE.c"
+#line 4817 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4837,7 +4836,7 @@ XS(XS_Win32__OLE__Tie_Fetch)
 	SV *	self = ST(0);
 	SV *	key = ST(1);
 	SV *	def = ST(2);
-#line 4545 "OLE.xs"
+#line 4544 "OLE.xs"
 {
     char *buffer;
     STRLEN length;
@@ -4913,7 +4912,7 @@ XS(XS_Win32__OLE__Tie_Fetch)
 
     XSRETURN(1);
 }
-#line 4917 "OLE.c"
+#line 4916 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -4937,7 +4936,7 @@ XS(XS_Win32__OLE__Tie_Store)
 	SV *	key = ST(1);
 	SV *	value = ST(2);
 	SV *	def = ST(3);
-#line 4628 "OLE.xs"
+#line 4627 "OLE.xs"
 {
     unsigned int argErr;
     STRLEN length;
@@ -5010,7 +5009,7 @@ XS(XS_Win32__OLE__Tie_Store)
 
     XSRETURN_YES;
 }
-#line 5014 "OLE.c"
+#line 5013 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5032,7 +5031,7 @@ XS(XS_Win32__OLE__Tie_FIRSTKEY)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 4709 "OLE.xs"
+#line 4708 "OLE.xs"
 {
     /* NEXTKEY has an additional "lastkey" arg, which is not needed here */
     WINOLEOBJECT *pObj = GetOleObject(aTHX_ self);
@@ -5075,7 +5074,7 @@ XS(XS_Win32__OLE__Tie_FIRSTKEY)
     ST(0) = sv;
     XSRETURN(1);
 }
-#line 5079 "OLE.c"
+#line 5078 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5101,7 +5100,7 @@ XS(XS_Win32__OLE__Const__LoadRegTypeLib)
 	SV *	locale = ST(3);
 	SV *	typelib = ST(4);
 	SV *	codepage = ST(5);
-#line 4765 "OLE.xs"
+#line 4764 "OLE.xs"
 {
     ITypeLib *pTypeLib;
     TLIBATTR *pTLibAttr;
@@ -5142,7 +5141,7 @@ XS(XS_Win32__OLE__Const__LoadRegTypeLib)
     ST(0) = sv_2mortal(CreateTypeLibObject(aTHX_ pTypeLib, pTLibAttr));
     XSRETURN(1);
 }
-#line 5146 "OLE.c"
+#line 5145 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5164,7 +5163,7 @@ XS(XS_Win32__OLE__Const__Constants)
     {
 	SV *	typelib = ST(0);
 	SV *	caller = ST(1);
-#line 4811 "OLE.xs"
+#line 4810 "OLE.xs"
 {
     HRESULT hr;
     UINT cp = cpDefault;
@@ -5253,7 +5252,7 @@ XS(XS_Win32__OLE__Const__Constants)
     }
     XSRETURN(1);
 }
-#line 5257 "OLE.c"
+#line 5256 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5275,7 +5274,7 @@ XS(XS_Win32__OLE__Const__Typelibs)
     {
 	SV *	self = ST(0);
 	SV *	typelib = ST(1);
-#line 4905 "OLE.xs"
+#line 4904 "OLE.xs"
 {
     HKEY hKeyTypelib;
     FILETIME ft;
@@ -5372,7 +5371,7 @@ XS(XS_Win32__OLE__Const__Typelibs)
     RegCloseKey(hKeyTypelib);
     XSRETURN_YES;
 }
-#line 5376 "OLE.c"
+#line 5375 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5394,7 +5393,7 @@ XS(XS_Win32__OLE__Const__ShowHelpContext)
     {
 	char *	helpfile = (char *)SvPV_nolen(ST(0));
 	IV	context = (IV)SvIV(ST(1));
-#line 5007 "OLE.xs"
+#line 5006 "OLE.xs"
 {
     HWND hwnd;
     dPERINTERP;
@@ -5416,7 +5415,7 @@ XS(XS_Win32__OLE__Const__ShowHelpContext)
     if (hwnd == 0 && context == 0) // try HH_DISPLAY_TOPIC 0x0
 	g_pfnHtmlHelp(GetDesktopWindow(), helpfile, 0, (DWORD)context);
 }
-#line 5420 "OLE.c"
+#line 5419 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5439,7 +5438,7 @@ XS(XS_Win32__OLE__Enum_new)
     {
 	SV *	self = ST(0);
 	SV *	object = ST(1);
-#line 5040 "OLE.xs"
+#line 5039 "OLE.xs"
 {
     WINOLEENUMOBJECT *pEnumObj;
     New(0, pEnumObj, 1, WINOLEENUMOBJECT);
@@ -5474,7 +5473,7 @@ XS(XS_Win32__OLE__Enum_new)
     ST(0) = sv_2mortal(sv_bless(newRV_noinc(sv), GetStash(aTHX_ self)));
     XSRETURN(1);
 }
-#line 5478 "OLE.c"
+#line 5477 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5495,7 +5494,7 @@ XS(XS_Win32__OLE__Enum_DESTROY)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5079 "OLE.xs"
+#line 5078 "OLE.xs"
 {
     WINOLEENUMOBJECT *pEnumObj = GetOleEnumObject(aTHX_ self, TRUE);
     if (pEnumObj) {
@@ -5506,7 +5505,7 @@ XS(XS_Win32__OLE__Enum_DESTROY)
     }
     XSRETURN_EMPTY;
 }
-#line 5510 "OLE.c"
+#line 5509 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5528,7 +5527,7 @@ XS(XS_Win32__OLE__Enum_All)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5096 "OLE.xs"
+#line 5095 "OLE.xs"
 {
     int count = 1;
     if (ix == 0) { /* All */
@@ -5574,7 +5573,7 @@ XS(XS_Win32__OLE__Enum_All)
         XPUSHs(sv);
     }
 }
-#line 5578 "OLE.c"
+#line 5577 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5595,7 +5594,7 @@ XS(XS_Win32__OLE__Enum_Reset)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5146 "OLE.xs"
+#line 5145 "OLE.xs"
 {
     WINOLEENUMOBJECT *pEnumObj = GetOleEnumObject(aTHX_ self);
     if (!pEnumObj)
@@ -5609,7 +5608,7 @@ XS(XS_Win32__OLE__Enum_Reset)
     ST(0) = boolSV(hr == S_OK);
     XSRETURN(1);
 }
-#line 5613 "OLE.c"
+#line 5612 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5630,7 +5629,7 @@ XS(XS_Win32__OLE__Enum_Skip)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5164 "OLE.xs"
+#line 5163 "OLE.xs"
 {
     WINOLEENUMOBJECT *pEnumObj = GetOleEnumObject(aTHX_ self);
     if (!pEnumObj)
@@ -5644,7 +5643,7 @@ XS(XS_Win32__OLE__Enum_Skip)
     ST(0) = boolSV(hr == S_OK);
     XSRETURN(1);
 }
-#line 5648 "OLE.c"
+#line 5647 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5665,7 +5664,7 @@ XS(XS_Win32__OLE__Variant_new)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5186 "OLE.xs"
+#line 5185 "OLE.xs"
 {
     HRESULT hr;
     WINOLEVARIANTOBJECT *pVarObj;
@@ -5784,7 +5783,7 @@ XS(XS_Win32__OLE__Variant_new)
     ST(0) = sv_2mortal(sv_bless(newRV_noinc(sv), stash));
     XSRETURN(1);
 }
-#line 5788 "OLE.c"
+#line 5787 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5805,7 +5804,7 @@ XS(XS_Win32__OLE__Variant_DESTROY)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5309 "OLE.xs"
+#line 5308 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
     if (pVarObj) {
@@ -5816,7 +5815,7 @@ XS(XS_Win32__OLE__Variant_DESTROY)
 
     XSRETURN_EMPTY;
 }
-#line 5820 "OLE.c"
+#line 5819 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5838,7 +5837,7 @@ XS(XS_Win32__OLE__Variant_As)
     {
 	SV *	self = ST(0);
 	IV	type = (IV)SvIV(ST(1));
-#line 5325 "OLE.xs"
+#line 5324 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
     if (!pVarObj)
@@ -5869,7 +5868,7 @@ XS(XS_Win32__OLE__Variant_As)
     ST(0) = sv;
     XSRETURN(1);
 }
-#line 5873 "OLE.c"
+#line 5872 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5891,7 +5890,7 @@ XS(XS_Win32__OLE__Variant_ChangeType)
     {
 	SV *	self = ST(0);
 	IV	type = (IV)SvIV(ST(1));
-#line 5361 "OLE.xs"
+#line 5360 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
     if (!pVarObj)
@@ -5910,7 +5909,7 @@ XS(XS_Win32__OLE__Variant_ChangeType)
 
     XSRETURN(1);
 }
-#line 5914 "OLE.c"
+#line 5913 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -5932,7 +5931,7 @@ XS(XS_Win32__OLE__Variant_Copy)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5386 "OLE.xs"
+#line 5385 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
     if (!pVarObj)
@@ -6014,7 +6013,7 @@ XS(XS_Win32__OLE__Variant_Copy)
     ST(0) = sv_2mortal(sv_bless(newRV_noinc(sv), stash));
     XSRETURN(1);
 }
-#line 6018 "OLE.c"
+#line 6017 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6036,7 +6035,7 @@ XS(XS_Win32__OLE__Variant_Date)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5474 "OLE.xs"
+#line 5473 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
     if (!pVarObj)
@@ -6100,7 +6099,7 @@ XS(XS_Win32__OLE__Variant_Date)
     VariantClear(&variant);
     XSRETURN(1);
 }
-#line 6104 "OLE.c"
+#line 6103 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6121,7 +6120,7 @@ XS(XS_Win32__OLE__Variant_Currency)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5542 "OLE.xs"
+#line 5541 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
     if (!pVarObj)
@@ -6234,7 +6233,7 @@ XS(XS_Win32__OLE__Variant_Currency)
     VariantClear(&variant);
     XSRETURN(1);
 }
-#line 6238 "OLE.c"
+#line 6237 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6255,7 +6254,7 @@ XS(XS_Win32__OLE__Variant_Number)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5659 "OLE.xs"
+#line 5658 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
     if (!pVarObj)
@@ -6339,7 +6338,7 @@ XS(XS_Win32__OLE__Variant_Number)
     VariantClear(&variant);
     XSRETURN(1);
 }
-#line 6343 "OLE.c"
+#line 6342 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6360,7 +6359,7 @@ XS(XS_Win32__OLE__Variant_Dim)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5747 "OLE.xs"
+#line 5746 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
     if (!pVarObj)
@@ -6404,7 +6403,7 @@ XS(XS_Win32__OLE__Variant_Dim)
 
     /* return list of array refs on stack */
 }
-#line 6408 "OLE.c"
+#line 6407 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6426,7 +6425,7 @@ XS(XS_Win32__OLE__Variant_Get)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5797 "OLE.xs"
+#line 5796 "OLE.xs"
 {
     char *paszMethod[] = {"Get", "Put"};
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
@@ -6548,7 +6547,7 @@ XS(XS_Win32__OLE__Variant_Get)
     ST(0) = sv;
     XSRETURN(1);
 }
-#line 6552 "OLE.c"
+#line 6551 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6569,7 +6568,7 @@ XS(XS_Win32__OLE__Variant_LastError)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5923 "OLE.xs"
+#line 5922 "OLE.xs"
 {
     // Win32::OLE::Variant->LastError() exists only for backward compatibility.
     // It is now just a proxy for Win32::OLE->LastError().
@@ -6587,7 +6586,7 @@ XS(XS_Win32__OLE__Variant_LastError)
 
     // return whatever Win32::OLE->LastError() returned
 }
-#line 6591 "OLE.c"
+#line 6590 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6609,7 +6608,7 @@ XS(XS_Win32__OLE__Variant_Type)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5951 "OLE.xs"
+#line 5950 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
 
@@ -6649,7 +6648,7 @@ XS(XS_Win32__OLE__Variant_Type)
     ST(0) = sv;
     XSRETURN(1);
 }
-#line 6653 "OLE.c"
+#line 6652 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6670,7 +6669,7 @@ XS(XS_Win32__OLE__Variant_Unicode)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 5995 "OLE.xs"
+#line 5994 "OLE.xs"
 {
     WINOLEVARIANTOBJECT *pVarObj = GetOleVariantObject(aTHX_ self);
 
@@ -6707,7 +6706,7 @@ XS(XS_Win32__OLE__Variant_Unicode)
     }
     XSRETURN(1);
 }
-#line 6711 "OLE.c"
+#line 6710 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6731,7 +6730,7 @@ XS(XS_Win32__OLE__NLS_CompareString)
 	IV	flags = (IV)SvIV(ST(1));
 	SV *	str1 = ST(2);
 	SV *	str2 = ST(3);
-#line 6043 "OLE.xs"
+#line 6042 "OLE.xs"
 {
     STRLEN length1;
     STRLEN length2;
@@ -6742,7 +6741,7 @@ XS(XS_Win32__OLE__NLS_CompareString)
                             string1, (int)length1, string2, (int)length2);
     XSRETURN_IV(res);
 }
-#line 6746 "OLE.c"
+#line 6745 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6765,7 +6764,7 @@ XS(XS_Win32__OLE__NLS_LCMapString)
 	IV	lcid = (IV)SvIV(ST(0));
 	IV	flags = (IV)SvIV(ST(1));
 	SV *	str = ST(2);
-#line 6060 "OLE.xs"
+#line 6059 "OLE.xs"
 {
     SV *sv;
     STRLEN length;
@@ -6786,7 +6785,7 @@ XS(XS_Win32__OLE__NLS_LCMapString)
     ST(0) = sv;
     XSRETURN(1);
 }
-#line 6790 "OLE.c"
+#line 6789 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6808,7 +6807,7 @@ XS(XS_Win32__OLE__NLS_GetLocaleInfo)
     {
 	IV	lcid = (IV)SvIV(ST(0));
 	IV	lctype = (IV)SvIV(ST(1));
-#line 6086 "OLE.xs"
+#line 6085 "OLE.xs"
 {
     SV *sv = sv_newmortal();
     int len = GetLocaleInfoA((LCID)lcid, (LCTYPE)lctype, NULL, 0);
@@ -6824,7 +6823,7 @@ XS(XS_Win32__OLE__NLS_GetLocaleInfo)
     ST(0) = sv;
     XSRETURN(1);
 }
-#line 6828 "OLE.c"
+#line 6827 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6847,7 +6846,7 @@ XS(XS_Win32__OLE__NLS_GetStringType)
 	IV	lcid = (IV)SvIV(ST(0));
 	IV	type = (IV)SvIV(ST(1));
 	SV *	str = ST(2);
-#line 6108 "OLE.xs"
+#line 6107 "OLE.xs"
 {
     STRLEN len;
     char *string = SvPV(str, len);
@@ -6861,7 +6860,7 @@ XS(XS_Win32__OLE__NLS_GetStringType)
     }
     Safefree(pCharType);
 }
-#line 6865 "OLE.c"
+#line 6864 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6881,7 +6880,7 @@ XS(XS_Win32__OLE__NLS_GetSystemDefaultLangID)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 6125 "OLE.xs"
+#line 6124 "OLE.xs"
 {
     LANGID langID = GetSystemDefaultLangID();
     if (langID != 0) {
@@ -6889,7 +6888,7 @@ XS(XS_Win32__OLE__NLS_GetSystemDefaultLangID)
 	XSRETURN_IV(langID);
     }
 }
-#line 6893 "OLE.c"
+#line 6892 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6909,7 +6908,7 @@ XS(XS_Win32__OLE__NLS_GetSystemDefaultLCID)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 6136 "OLE.xs"
+#line 6135 "OLE.xs"
 {
     LCID lcid = GetSystemDefaultLCID();
     if (lcid != 0) {
@@ -6917,7 +6916,7 @@ XS(XS_Win32__OLE__NLS_GetSystemDefaultLCID)
 	XSRETURN_IV(lcid);
     }
 }
-#line 6921 "OLE.c"
+#line 6920 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6937,7 +6936,7 @@ XS(XS_Win32__OLE__NLS_GetUserDefaultLangID)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 6147 "OLE.xs"
+#line 6146 "OLE.xs"
 {
     LANGID langID = GetUserDefaultLangID();
     if (langID != 0) {
@@ -6945,7 +6944,7 @@ XS(XS_Win32__OLE__NLS_GetUserDefaultLangID)
 	XSRETURN_IV(langID);
     }
 }
-#line 6949 "OLE.c"
+#line 6948 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6965,7 +6964,7 @@ XS(XS_Win32__OLE__NLS_GetUserDefaultLCID)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 6158 "OLE.xs"
+#line 6157 "OLE.xs"
 {
     LCID lcid = GetUserDefaultLCID();
     if (lcid != 0) {
@@ -6973,7 +6972,7 @@ XS(XS_Win32__OLE__NLS_GetUserDefaultLCID)
 	XSRETURN_IV(lcid);
     }
 }
-#line 6977 "OLE.c"
+#line 6976 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -6993,7 +6992,7 @@ XS(XS_Win32__OLE__NLS_SendSettingChange)
     PERL_UNUSED_VAR(ax); /* -Wall */
     SP -= items;
     {
-#line 6169 "OLE.xs"
+#line 6168 "OLE.xs"
 {
     DWORD_PTR dwResult;
 
@@ -7001,7 +7000,7 @@ XS(XS_Win32__OLE__NLS_SendSettingChange)
 		       SMTO_NORMAL, 5000, &dwResult);
     XSRETURN_EMPTY;
 }
-#line 7005 "OLE.c"
+#line 7004 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7024,7 +7023,7 @@ XS(XS_Win32__OLE__NLS_SetLocaleInfo)
 	IV	lcid = (IV)SvIV(ST(0));
 	IV	lctype = (IV)SvIV(ST(1));
 	char *	lcdata = (char *)SvPV_nolen(ST(2));
-#line 6183 "OLE.xs"
+#line 6182 "OLE.xs"
 {
     BOOL result = SetLocaleInfoA((LCID)lcid, (LCTYPE)lctype, lcdata);
     if (result)
@@ -7032,7 +7031,7 @@ XS(XS_Win32__OLE__NLS_SetLocaleInfo)
 
     XSRETURN_EMPTY;
 }
-#line 7036 "OLE.c"
+#line 7035 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7054,7 +7053,7 @@ XS(XS_Win32__OLE__TypeLib_new)
     {
 	SV *	self = ST(0);
 	SV *	object = ST(1);
-#line 6201 "OLE.xs"
+#line 6200 "OLE.xs"
 {
     HRESULT hr;
     HV *stash = Nullhv;
@@ -7105,7 +7104,7 @@ XS(XS_Win32__OLE__TypeLib_new)
     ST(0) = sv_2mortal(CreateTypeLibObject(aTHX_ pTypeLib, pTLibAttr));
     XSRETURN(1);
 }
-#line 7109 "OLE.c"
+#line 7108 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7126,7 +7125,7 @@ XS(XS_Win32__OLE__TypeLib_DESTROY)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 6256 "OLE.xs"
+#line 6255 "OLE.xs"
 {
     WINOLETYPELIBOBJECT *pObj = GetOleTypeLibObject(aTHX_ self);
     if (pObj) {
@@ -7139,7 +7138,7 @@ XS(XS_Win32__OLE__TypeLib_DESTROY)
     }
     XSRETURN_EMPTY;
 }
-#line 7143 "OLE.c"
+#line 7142 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7167,7 +7166,7 @@ XS(XS_Win32__OLE__TypeLib__GetDocumentation)
 	else {
 	    index = (IV)SvIV(ST(1));
 	}
-#line 6274 "OLE.xs"
+#line 6273 "OLE.xs"
 {
     WINOLETYPELIBOBJECT *pObj = GetOleTypeLibObject(aTHX_ self);
     if (!pObj)
@@ -7186,7 +7185,7 @@ XS(XS_Win32__OLE__TypeLib__GetDocumentation)
     ST(0) = sv_2mortal(newRV_noinc((SV*)hv));
     XSRETURN(1);
 }
-#line 7190 "OLE.c"
+#line 7189 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7207,7 +7206,7 @@ XS(XS_Win32__OLE__TypeLib__GetLibAttr)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 6297 "OLE.xs"
+#line 6296 "OLE.xs"
 {
     WINOLETYPELIBOBJECT *pObj = GetOleTypeLibObject(aTHX_ self);
     if (!pObj)
@@ -7226,7 +7225,7 @@ XS(XS_Win32__OLE__TypeLib__GetLibAttr)
     ST(0) = sv_2mortal(newRV_noinc((SV*)hv));
     XSRETURN(1);
 }
-#line 7230 "OLE.c"
+#line 7229 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7247,7 +7246,7 @@ XS(XS_Win32__OLE__TypeLib__GetTypeInfoCount)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 6320 "OLE.xs"
+#line 6319 "OLE.xs"
 {
     WINOLETYPELIBOBJECT *pObj = GetOleTypeLibObject(aTHX_ self);
     if (!pObj)
@@ -7255,7 +7254,7 @@ XS(XS_Win32__OLE__TypeLib__GetTypeInfoCount)
 
     XSRETURN_IV(pObj->pTypeLib->GetTypeInfoCount());
 }
-#line 7259 "OLE.c"
+#line 7258 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7277,7 +7276,7 @@ XS(XS_Win32__OLE__TypeLib__GetTypeInfo)
     {
 	SV *	self = ST(0);
 	IV	index = (IV)SvIV(ST(1));
-#line 6333 "OLE.xs"
+#line 6332 "OLE.xs"
 {
     WINOLETYPELIBOBJECT *pObj = GetOleTypeLibObject(aTHX_ self);
     if (!pObj)
@@ -7301,7 +7300,7 @@ XS(XS_Win32__OLE__TypeLib__GetTypeInfo)
     ST(0) = sv_2mortal(CreateTypeInfoObject(aTHX_ pTypeInfo, pTypeAttr));
     XSRETURN(1);
 }
-#line 7305 "OLE.c"
+#line 7304 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7323,7 +7322,7 @@ XS(XS_Win32__OLE__TypeLib_GetTypeInfo)
     {
 	SV *	self = ST(0);
 	SV *	name = ST(1);
-#line 6362 "OLE.xs"
+#line 6361 "OLE.xs"
 {
     WINOLETYPELIBOBJECT *pObj = GetOleTypeLibObject(aTHX_ self);
     if (!pObj)
@@ -7388,7 +7387,7 @@ XS(XS_Win32__OLE__TypeLib_GetTypeInfo)
     }
     XSRETURN_EMPTY;
 }
-#line 7392 "OLE.c"
+#line 7391 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7410,7 +7409,7 @@ XS(XS_Win32__OLE__TypeInfo__new)
     {
 	SV *	self = ST(0);
 	SV *	object = ST(1);
-#line 6436 "OLE.xs"
+#line 6435 "OLE.xs"
 {
     ITypeInfo *pTypeInfo;
     TYPEATTR  *pTypeAttr;
@@ -7439,7 +7438,7 @@ XS(XS_Win32__OLE__TypeInfo__new)
     ST(0) = sv_2mortal(CreateTypeInfoObject(aTHX_ pTypeInfo, pTypeAttr));
     XSRETURN(1);
 }
-#line 7443 "OLE.c"
+#line 7442 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7460,7 +7459,7 @@ XS(XS_Win32__OLE__TypeInfo_DESTROY)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 6469 "OLE.xs"
+#line 6468 "OLE.xs"
 {
     WINOLETYPEINFOOBJECT *pObj = GetOleTypeInfoObject(aTHX_ self);
     if (pObj) {
@@ -7473,7 +7472,7 @@ XS(XS_Win32__OLE__TypeInfo_DESTROY)
     }
     XSRETURN_EMPTY;
 }
-#line 7477 "OLE.c"
+#line 7476 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7494,7 +7493,7 @@ XS(XS_Win32__OLE__TypeInfo_GetContainingTypeLib)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 6486 "OLE.xs"
+#line 6485 "OLE.xs"
 {
     ITypeLib  *pTypeLib;
     TLIBATTR  *pTLibAttr;
@@ -7519,7 +7518,7 @@ XS(XS_Win32__OLE__TypeInfo_GetContainingTypeLib)
     ST(0) = sv_2mortal(CreateTypeLibObject(aTHX_ pTypeLib, pTLibAttr));
     XSRETURN(1);
 }
-#line 7523 "OLE.c"
+#line 7522 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7547,7 +7546,7 @@ XS(XS_Win32__OLE__TypeInfo__GetDocumentation)
 	else {
 	    memid = (IV)SvIV(ST(1));
 	}
-#line 6516 "OLE.xs"
+#line 6515 "OLE.xs"
 {
     WINOLETYPEINFOOBJECT *pObj = GetOleTypeInfoObject(aTHX_ self);
     if (!pObj)
@@ -7566,7 +7565,7 @@ XS(XS_Win32__OLE__TypeInfo__GetDocumentation)
     ST(0) = sv_2mortal(newRV_noinc((SV*)hv));
     XSRETURN(1);
 }
-#line 7570 "OLE.c"
+#line 7569 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7588,7 +7587,7 @@ XS(XS_Win32__OLE__TypeInfo__GetFuncDesc)
     {
 	SV *	self = ST(0);
 	IV	index = (IV)SvIV(ST(1));
-#line 6540 "OLE.xs"
+#line 6539 "OLE.xs"
 {
     WINOLETYPEINFOOBJECT *pObj = GetOleTypeInfoObject(aTHX_ self);
     if (!pObj)
@@ -7630,7 +7629,7 @@ XS(XS_Win32__OLE__TypeInfo__GetFuncDesc)
     ST(0) = sv_2mortal(newRV_noinc((SV*)hv));
     XSRETURN(1);
 }
-#line 7634 "OLE.c"
+#line 7633 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7652,7 +7651,7 @@ XS(XS_Win32__OLE__TypeInfo__GetImplTypeFlags)
     {
 	SV *	self = ST(0);
 	IV	index = (IV)SvIV(ST(1));
-#line 6587 "OLE.xs"
+#line 6586 "OLE.xs"
 {
     WINOLETYPEINFOOBJECT *pObj = GetOleTypeInfoObject(aTHX_ self);
     if (!pObj)
@@ -7666,7 +7665,7 @@ XS(XS_Win32__OLE__TypeInfo__GetImplTypeFlags)
 
     XSRETURN_IV(flags);
 }
-#line 7670 "OLE.c"
+#line 7669 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7688,7 +7687,7 @@ XS(XS_Win32__OLE__TypeInfo__GetImplTypeInfo)
     {
 	SV *	self = ST(0);
 	IV	index = (IV)SvIV(ST(1));
-#line 6606 "OLE.xs"
+#line 6605 "OLE.xs"
 {
     HREFTYPE  hRefType;
     ITypeInfo *pTypeInfo;
@@ -7724,7 +7723,7 @@ XS(XS_Win32__OLE__TypeInfo__GetImplTypeInfo)
     ST(0) = sv_2mortal(sv_bless(newRV_noinc(sv), GetStash(aTHX_ self)));
     XSRETURN(1);
 }
-#line 7728 "OLE.c"
+#line 7727 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7747,7 +7746,7 @@ XS(XS_Win32__OLE__TypeInfo__GetNames)
 	SV *	self = ST(0);
 	IV	memid = (IV)SvIV(ST(1));
 	IV	count = (IV)SvIV(ST(2));
-#line 6648 "OLE.xs"
+#line 6647 "OLE.xs"
 {
     WINOLETYPEINFOOBJECT *pObj = GetOleTypeInfoObject(aTHX_ self);
     if (!pObj)
@@ -7776,7 +7775,7 @@ XS(XS_Win32__OLE__TypeInfo__GetNames)
     ST(0) = sv_2mortal(newRV_noinc((SV*)av));
     XSRETURN(1);
 }
-#line 7780 "OLE.c"
+#line 7779 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7797,7 +7796,7 @@ XS(XS_Win32__OLE__TypeInfo__GetTypeAttr)
     SP -= items;
     {
 	SV *	self = ST(0);
-#line 6681 "OLE.xs"
+#line 6680 "OLE.xs"
 {
     WINOLETYPEINFOOBJECT *pObj = GetOleTypeInfoObject(aTHX_ self);
     if (!pObj)
@@ -7828,7 +7827,7 @@ XS(XS_Win32__OLE__TypeInfo__GetTypeAttr)
     ST(0) = sv_2mortal(newRV_noinc((SV*)hv));
     XSRETURN(1);
 }
-#line 7832 "OLE.c"
+#line 7831 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -7850,7 +7849,7 @@ XS(XS_Win32__OLE__TypeInfo__GetVarDesc)
     {
 	SV *	self = ST(0);
 	IV	index = (IV)SvIV(ST(1));
-#line 6717 "OLE.xs"
+#line 6716 "OLE.xs"
 {
     WINOLETYPEINFOOBJECT *pObj = GetOleTypeInfoObject(aTHX_ self);
     if (!pObj)
@@ -7886,7 +7885,7 @@ XS(XS_Win32__OLE__TypeInfo__GetVarDesc)
     ST(0) = sv_2mortal(newRV_noinc((SV*)hv));
     XSRETURN(1);
 }
-#line 7890 "OLE.c"
+#line 7889 "OLE.c"
 	PUTBACK;
 	return;
     }
@@ -8033,10 +8032,10 @@ XS(boot_Win32__OLE)
 
     /* Initialisation Section */
 
-#line 3455 "OLE.xs"
+#line 3454 "OLE.xs"
     Bootstrap(aTHX);
 
-#line 8040 "OLE.c"
+#line 8039 "OLE.c"
 
     /* End of Initialisation Section */
 

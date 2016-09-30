@@ -165,8 +165,10 @@ BOOTDEP =
 
 # Handy lists of source code files:
 XS_FILES = OLE.xs
-C_FILES  = OLE.c
-O_FILES  = OLE.o
+C_FILES  = OLE.c \
+	OLE.cpp
+O_FILES  = OLE.o \
+	OLE.o
 H_FILES  = 
 MAN1PODS = 
 MAN3PODS = lib/Win32/OLE.pm \

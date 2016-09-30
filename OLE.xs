@@ -3266,7 +3266,6 @@ Initialize(pTHX_ HV *stash, DWORD dwCoInit=COINIT_MULTITHREADED)
 void
 Uninitialize(pTHX_ PERINTERP *pInterp)
 {
-	printf("Unitialize\r\n");
     DBG(("Uninitialize\n"));
     EnterCriticalSection(&g_CriticalSection);
     if (g_bInitialized) {
@@ -3329,11 +3328,13 @@ Uninitialize(pTHX_ PERINTERP *pInterp)
 
 }   /* Uninitialize */
 
+
 static void
 AtExit(pTHX_ void *pVoid)
 {
-	// don't exit from child threads
-	printf("AtExit(%d)\r\n",prh_thread_num);
+	/* don't exit from child threads */
+	/* printf("AtExit(%d)\r\n",prh_thread_num); */
+	
 	if (prh_thread_num > 0)
 	{
 		return;
@@ -3356,8 +3357,6 @@ AtExit(pTHX_ void *pVoid)
 void
 Bootstrap(pTHX)
 {
-	printf("Bootstrap\r\n");
-	
     dSP;
 #ifdef PERL_IMPLICIT_CONTEXT
     PERINTERP *pInterp;
@@ -3537,7 +3536,7 @@ prhSetThreadNum(thread_num)
     IV thread_num
 PPCODE:
 {
-	printf("prhSetThreadNum(%d)\r\n",(int) thread_num);
+	/* prh printf("prhSetThreadNum(%d)\r\n",(int) thread_num); */
 	prh_thread_num = (int) thread_num;
 	XSRETURN_EMPTY;
 }
