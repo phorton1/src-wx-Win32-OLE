@@ -11,6 +11,16 @@ To build:
 
 Changes are all in OLE.xs indentifiable with search for "prh"
 
+To use:
 
+	In a program that uses Win32::OLE and threads,
+	call Win32::OLE::prhSetThreadNum(1) at the top
+	of the program, before creating (and particularly
+	finishing) any threads.
 
+	This will cause Win32::OLE::AtExit(pTHX_ void *pVoid)
+	to short return, and not free the libraries and
+	destroy memory.
 
+	Presumably, all of this will happen automatically
+	in the (main) Perl interpreter when it really exits.
